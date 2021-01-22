@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -81,19 +81,20 @@ public class SnappyCompressor implements Compressor {
 
     // Return compressed output up to 'len'
     int numBytes = Math.min(len, outputBuffer.remaining());
-    outputBuffer.get(buffer, off, numBytes);    
+    outputBuffer.get(buffer, off, numBytes);
     bytesWritten += numBytes;
-    return numBytes;	    
+    return numBytes;
   }
 
   @Override
-  public synchronized void setInput(byte[] buffer, int off, int len) {  
+  public synchronized void setInput(byte[] buffer, int off, int len) {
     SnappyUtil.validateBuffer(buffer, off, len);
-    
-    Preconditions.checkArgument(!outputBuffer.hasRemaining(), 
+
+    Preconditions.checkArgument(!outputBuffer.hasRemaining(),
         "Output buffer should be empty. Caller must call compress()");
 
     if (inputBuffer.capacity() - inputBuffer.position() < len) {
+      ((sun.nio.ch.DirectBuffer) inputBuffer).cleaner().clean();
       ByteBuffer tmp = ByteBuffer.allocateDirect(inputBuffer.position() + len);
       inputBuffer.rewind();
       tmp.put(inputBuffer);
@@ -109,7 +110,7 @@ public class SnappyCompressor implements Compressor {
 
   @Override
   public void end() {
-    // No-op		
+    // No-op
   }
 
   @Override
@@ -141,7 +142,7 @@ public class SnappyCompressor implements Compressor {
 
   @Override
   public void reinit(Configuration c) {
-    reset();		
+    reset();
   }
 
   @Override
@@ -156,6 +157,6 @@ public class SnappyCompressor implements Compressor {
 
   @Override
   public void setDictionary(byte[] dictionary, int off, int len) {
-    // No-op		
+    // No-op
   }
 }

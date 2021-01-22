@@ -196,9 +196,9 @@
               <execution>
                 <id>check-thrift-version</id>
                 <phase>generate-sources</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
+<!--                <goals>-->
+<!--                  <goal>exec</goal>-->
+<!--                </goals>-->
                 <configuration>
                   <executable>sh</executable>
                   <workingDirectory>${basedir}</workingDirectory>
