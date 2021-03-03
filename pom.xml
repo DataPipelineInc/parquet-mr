@@ -398,7 +398,6 @@
           <argLine>-XX:MaxPermSize=256m</argLine>
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.target}</target>
-          <skip>true</skip>
         </configuration>
       </plugin>
       <plugin>
@@ -420,7 +419,6 @@
         <version>2.10</version>
         <configuration>
           <argLine>-Xmx512m</argLine>
-          <skip>true</skip>
           <systemPropertyVariables>
             <!-- Configure Parquet logging during tests
                  See http://www.slf4j.org/api/org/slf4j/impl/SimpleLogger.html
