@@ -94,10 +94,10 @@ public class SnappyCompressor implements Compressor {
         "Output buffer should be empty. Caller must call compress()");
 
     if (inputBuffer.capacity() - inputBuffer.position() < len) {
-      ((sun.nio.ch.DirectBuffer) inputBuffer).cleaner().clean();
       ByteBuffer tmp = ByteBuffer.allocateDirect(inputBuffer.position() + len);
       inputBuffer.rewind();
       tmp.put(inputBuffer);
+      ((sun.nio.ch.DirectBuffer) inputBuffer).cleaner().clean();
       inputBuffer = tmp;
     } else {
       inputBuffer.limit(inputBuffer.position() + len);
