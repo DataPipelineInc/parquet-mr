@@ -21,7 +21,7 @@
     <groupId>org.apache.parquet</groupId>
     <artifactId>parquet</artifactId>
     <relativePath>../pom.xml</relativePath>
-    <version>1.10.2.tmp-dp-SNAPSHOT</version>
+    <version>1.10.3-dp-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
