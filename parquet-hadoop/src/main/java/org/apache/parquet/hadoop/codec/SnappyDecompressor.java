@@ -99,11 +99,11 @@ public class SnappyDecompressor implements Decompressor {
     SnappyUtil.validateBuffer(buffer, off, len);
 
     if (inputBuffer.capacity() - inputBuffer.position() < len) {
+      ((sun.nio.ch.DirectBuffer) inputBuffer).cleaner().clean();
       ByteBuffer newBuffer = ByteBuffer.allocateDirect(inputBuffer.position() + len);
       inputBuffer.rewind();
       newBuffer.put(inputBuffer);
       inputBuffer = newBuffer;
-      ((sun.nio.ch.DirectBuffer) inputBuffer).cleaner().clean();
     } else {
       inputBuffer.limit(inputBuffer.position() + len);
     }
