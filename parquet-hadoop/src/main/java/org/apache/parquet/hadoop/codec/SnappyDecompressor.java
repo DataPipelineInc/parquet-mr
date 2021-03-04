@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -34,7 +34,7 @@ public class SnappyDecompressor implements Decompressor {
   private ByteBuffer inputBuffer = ByteBuffer.allocateDirect(0);
 
   private boolean finished;
-  
+
   /**
    * Fills specified buffer with uncompressed data. Returns actual number
    * of bytes of uncompressed data. A return value of 0 indicates that
@@ -53,7 +53,7 @@ public class SnappyDecompressor implements Decompressor {
 	if (inputBuffer.position() == 0 && !outputBuffer.hasRemaining()) {
       return 0;
     }
-    
+
     if (!outputBuffer.hasRemaining()) {
       inputBuffer.rewind();
       Preconditions.checkArgument(inputBuffer.position() == 0, "Invalid position of 0.");
@@ -77,7 +77,7 @@ public class SnappyDecompressor implements Decompressor {
     // Return compressed output up to 'len'
     int numBytes = Math.min(len, outputBuffer.remaining());
     outputBuffer.get(buffer, off, numBytes);
-    return numBytes;	    
+    return numBytes;
   }
 
   /**
@@ -102,7 +102,8 @@ public class SnappyDecompressor implements Decompressor {
       ByteBuffer newBuffer = ByteBuffer.allocateDirect(inputBuffer.position() + len);
       inputBuffer.rewind();
       newBuffer.put(inputBuffer);
-      inputBuffer = newBuffer;      
+      ((sun.nio.ch.DirectBuffer) inputBuffer).cleaner().clean();
+      inputBuffer = newBuffer;
     } else {
       inputBuffer.limit(inputBuffer.position() + len);
     }
@@ -111,7 +112,7 @@ public class SnappyDecompressor implements Decompressor {
 
   @Override
   public void end() {
-    // No-op		
+    // No-op
   }
 
   @Override
@@ -145,7 +146,7 @@ public class SnappyDecompressor implements Decompressor {
 
   @Override
   public void setDictionary(byte[] b, int off, int len) {
-    // No-op		
+    // No-op
   }
 
 } //class SnappyDecompressor
